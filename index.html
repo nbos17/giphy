@@ -39,7 +39,7 @@
       var searches = ["cat", "dog", "horse", "bear"];
 
       // displayMovieInfo function re-renders the HTML to display the appropriate content
-      function displayMovieInfo() {
+      function displayGif() {
 
         var search = $(this).attr("data-name");
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + search + "&limit=10&api_key=POujlkwdAc7kdBg5HO0uqTzEparcKo07";
@@ -52,25 +52,19 @@
           $('#movies-view').empty();
           for (i = 0; i < response.data.length; i++) {
             var newDiv = $('<div>');
-            var rating = response.data[i].images["fixed_height"].url;
+            var gifyAnimate = response.data[i].images["fixed_height"].url;
+            var gifyStill = response.data[i].images["fixed_height_still"].url;
+            var rating = response.data[i].rating;
             var image = $('<img>');
-            image.attr('src', rating);
+            image.attr('src', gifyStill);
+            image.addClass('giphy');
+            image.attr('data-state', 'still');
+            image.attr('data-animate', gifyAnimate);
+            image.attr('data-still', gifyStill);
             newDiv.append(image);
+            newDiv.append(rating);
             $('#movies-view').append(newDiv);
           }
-
-          // console.log(response);
-          
-
-          
-          // var release = $('<div>').text("R eleased" + response.Released);
-          // var plot = "Plot: " + response.Plot
-          // var image = response.Poster;          
-          // newDiv.append(rating + release);
-
-
-          
-
 
         });
 
@@ -98,7 +92,7 @@
       });
 
       // Adding click event listeners to all elements with a class of "movie"
-      $(document).on("click", ".gif", displayMovieInfo);
+      $(document).on("click", ".gif", displayGif);
 
 
       // Calling the renderButtons function to display the intial buttons
