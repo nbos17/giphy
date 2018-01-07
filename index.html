@@ -4,12 +4,30 @@
 <head>
   <meta charset="utf-8">
   <title>Giphy</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
   <style type="text/css">
     button,
     div,
     form,
     input {
       margin: 10px;
+    }
+    .gif {
+      background-color: teal;
+      padding-right: 20px;
+      padding-left: 20px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-size: 16px;
+      color: white;
+      font-style: sans-serif;
+    }
+    .holder {
+      width: 370px;
+
+      float: left;
+      border-style: solid;
+      border-width: 2px;
     }
   </style>
 </head>
@@ -52,6 +70,7 @@
           $('#movies-view').empty();
           for (i = 0; i < response.data.length; i++) {
             var newDiv = $('<div>');
+            newDiv.addClass('holder');
             var gifyAnimate = response.data[i].images["fixed_height"].url;
             var gifyStill = response.data[i].images["fixed_height_still"].url;
             var rating = response.data[i].rating;
@@ -62,9 +81,25 @@
             image.attr('data-animate', gifyAnimate);
             image.attr('data-still', gifyStill);
             newDiv.append(image);
-            newDiv.append(rating);
+            newDiv.prepend("Rating: " + rating);
             $('#movies-view').append(newDiv);
           }
+
+          $(".giphy").on("click", function() {
+            // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+            var state = $(this).attr("data-state");
+            console.log(state);
+            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+            // Then, set the image's data-state to animate
+            // Else set src to the data-still value
+            if (state === "still") {
+              $(this).attr("src", $(this).attr("data-animate"));
+              $(this).attr("data-state", "animate");
+            } else {
+              $(this).attr("src", $(this).attr("data-still"));
+              $(this).attr("data-state", "still");
+            }
+          });
 
         });
 
