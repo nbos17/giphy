@@ -26,8 +26,7 @@
       width: 370px;
 
       float: left;
-      border-style: solid;
-      border-width: 2px;
+
     }
   </style>
 </head>
@@ -74,6 +73,8 @@
             var gifyAnimate = response.data[i].images["fixed_height"].url;
             var gifyStill = response.data[i].images["fixed_height_still"].url;
             var rating = response.data[i].rating;
+            var pTag = $('<p>');
+            pTag.text("Rating: " + rating);
             var image = $('<img>');
             image.attr('src', gifyStill);
             image.addClass('giphy');
@@ -81,7 +82,7 @@
             image.attr('data-animate', gifyAnimate);
             image.attr('data-still', gifyStill);
             newDiv.append(image);
-            newDiv.prepend("Rating: " + rating);
+            newDiv.prepend(pTag);
             $('#movies-view').append(newDiv);
           }
 
