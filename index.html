@@ -5,31 +5,7 @@
   <meta charset="utf-8">
   <title>Giphy</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-  <style type="text/css">
-    button,
-    div,
-    form,
-    input {
-      margin: 10px;
-    }
-    .gif {
-      background-color: teal;
-      padding-right: 20px;
-      padding-left: 20px;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      font-size: 16px;
-      color: white;
-      font-style: sans-serif;
-      margin-right: 5px;
-    }
-    .holder {
-      width: 370px;
-
-      float: left;
-
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -39,7 +15,7 @@
 
     <div id="buttons-view"></div>
 
-    <form id="movie-form">
+    <form id="form">
       <label for="input">Search</label>
       <input type="text" id="input"><br>
 
@@ -51,88 +27,9 @@
     <div id="gifs-view"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
-      // Initial array of movies
-      var searches = ["cat", "dog", "horse", "bear"];
-
-      // displayMovieInfo function re-renders the HTML to display the appropriate content
-      function displayGif() {
-
-        var search = $(this).attr("data-name");
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + search + "&limit=10&api_key=POujlkwdAc7kdBg5HO0uqTzEparcKo07";
-
-        // Creates AJAX call for the specific movie button being clicked
-        $.ajax({
-          url: queryURL,
-          method: "GET"
-        }).done(function(response) {
-          $('#gifs-view').empty();
-          for (i = 0; i < response.data.length; i++) {
-            var newDiv = $('<div>');
-            newDiv.addClass('holder');
-            var gifyAnimate = response.data[i].images["fixed_height"].url;
-            var gifyStill = response.data[i].images["fixed_height_still"].url;
-            var rating = response.data[i].rating;
-            var pTag = $('<p>');
-            pTag.text("Rating: " + rating);
-            var image = $('<img>');
-            image.attr('src', gifyStill);
-            image.addClass('giphy');
-            image.attr('data-state', 'still');
-            image.attr('data-animate', gifyAnimate);
-            image.attr('data-still', gifyStill);
-            newDiv.append(image);
-            newDiv.prepend(pTag);
-            $('#gifs-view').append(newDiv);
-          }
-
-          $(".giphy").on("click", function() {
-            // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-            var state = $(this).attr("data-state");
-            console.log(state);
-            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-            // Then, set the image's data-state to animate
-            // Else set src to the data-still value
-            if (state === "still") {
-              $(this).attr("src", $(this).attr("data-animate"));
-              $(this).attr("data-state", "animate");
-            } else {
-              $(this).attr("src", $(this).attr("data-still"));
-              $(this).attr("data-state", "still");
-            }
-          });
-
-        });
-
-      }
-
-      // Function for displaying movie data
-      function renderButtons() {
-
-        $("#buttons-view").empty();
-        
-        for (var i = 0; i < searches.length; i++) { 
-          var a = $("<button>");
-          a.addClass("gif");
-          a.attr("data-name", searches[i]);
-          a.text(searches[i]);
-          $("#buttons-view").append(a);
-        }
-      }
-
-      $("#add-search").on("click", function(event) {
-        event.preventDefault();
-        var choice = $("#input").val().trim();
-        searches.push(choice);
-        renderButtons();
-      });
-
-      // Adding click event listeners to all elements with a class of "movie"
-      $(document).on("click", ".gif", displayGif);
-
-
-      // Calling the renderButtons function to display the intial buttons
-      renderButtons();
+    <script src="assets/javascript/javascript.js">
+      
+      
     </script>
   </div>
 </body>
