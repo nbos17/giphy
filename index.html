@@ -21,6 +21,7 @@
       font-size: 16px;
       color: white;
       font-style: sans-serif;
+      margin-right: 5px;
     }
     .holder {
       width: 370px;
@@ -36,19 +37,18 @@
   <div class="container">
     <h1>Giphy Search</h1>
 
-    <!-- Rendered buttons will get dumped here  -->
     <div id="buttons-view"></div>
 
     <form id="movie-form">
-      <label for="movie-input">Search</label>
-      <input type="text" id="movie-input"><br>
+      <label for="input">Search</label>
+      <input type="text" id="input"><br>
 
-      <!-- Button triggers new movie to be added -->
+ 
       <input id="add-search" type="submit" value="Submit">
     </form>
 
-    <!-- Movies will get dumped Dere -->
-    <div id="movies-view"></div>
+
+    <div id="gifs-view"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
@@ -66,7 +66,7 @@
           url: queryURL,
           method: "GET"
         }).done(function(response) {
-          $('#movies-view').empty();
+          $('#gifs-view').empty();
           for (i = 0; i < response.data.length; i++) {
             var newDiv = $('<div>');
             newDiv.addClass('holder');
@@ -83,7 +83,7 @@
             image.attr('data-still', gifyStill);
             newDiv.append(image);
             newDiv.prepend(pTag);
-            $('#movies-view').append(newDiv);
+            $('#gifs-view').append(newDiv);
           }
 
           $(".giphy").on("click", function() {
@@ -122,7 +122,7 @@
 
       $("#add-search").on("click", function(event) {
         event.preventDefault();
-        var choice = $("#movie-input").val().trim();
+        var choice = $("#input").val().trim();
         searches.push(choice);
         renderButtons();
       });
